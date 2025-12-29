@@ -1,0 +1,5 @@
+{
+  "name": "Ai News Flow",
+  "description": "An iPhone-styled news reader that extracts English web content and provides paragraph-by-paragraph Chinese translations using Gemini AI.",
+  "requestFramePermissions": []
+}
