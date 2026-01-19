@@ -77,7 +77,7 @@ const SwipableListItem: React.FC<SwipableListItemProps> = ({
   const handleDragEnd = () => {
     if (!startPos.current) return;
 
-    if (itemRef.current) itemRef.current.style.transition = 'transform 0.3s ease';
+    if (itemRef.current) itemRef.current.style.transition = 'transform 0.15s ease-out';
 
     if (isSwiping && isHorizontalSwipe.current === true && translateX > 70 && !actionTriggered.current) {
       actionTriggered.current = true;
@@ -88,7 +88,7 @@ const SwipableListItem: React.FC<SwipableListItemProps> = ({
     setIsSwiping(false);
     startPos.current = null;
     isHorizontalSwipe.current = null;
-    setTimeout(() => setShowSwipeContent(false), 300);
+    setTimeout(() => setShowSwipeContent(false), 200);
   };
 
   // 根据是否已收藏显示不同的滑动内容
@@ -97,13 +97,16 @@ const SwipableListItem: React.FC<SwipableListItemProps> = ({
   return (
     <div className="relative overflow-hidden rounded-2xl">
       <div
-        className={`absolute inset-0 flex items-center justify-start rounded-2xl transition-opacity duration-300 ${showSwipeContent ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 flex items-center justify-start rounded-2xl transition-opacity duration-150 ${showSwipeContent ? 'opacity-100' : 'opacity-0'}`}
       >
         {displaySwipeContent}
       </div>
       <div
         ref={itemRef}
-        style={{ transform: `translateX(${translateX}px)` }}
+        style={{
+          transform: `translate3d(${translateX}px, 0, 0)`,
+          willChange: isSwiping ? 'transform' : 'auto'
+        }}
         onMouseDown={(e) => handleDragStart(e.clientX, e.clientY, e)}
         onMouseMove={(e) => handleDragMove(e.clientX, e.clientY, e)}
         onMouseUp={handleDragEnd}

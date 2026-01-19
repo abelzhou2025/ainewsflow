@@ -92,8 +92,8 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`w-screen h-screen ${isDarkMode ? 'bg-[#000000]' : 'bg-[#1C1C1E]'} flex justify-center items-center font-sans overflow-hidden transition-colors duration-300`}>
-      <div className={`w-full h-full sm:w-[393px] sm:h-[852px] ${isDarkMode ? 'bg-[#121212] text-white' : 'bg-white text-black'} sm:rounded-[55px] shadow-2xl overflow-hidden relative flex flex-col sm:ring-[12px] sm:ring-black transition-colors duration-300`}>
+    <div className={`w-screen h-screen ${isDarkMode ? 'bg-[#000000]' : 'bg-[#F2F2F7]'} flex justify-center items-start md:items-center font-sans overflow-hidden transition-colors duration-300`}>
+      <div className={`w-full h-full max-w-[768px] ${isDarkMode ? 'bg-[#121212] text-white' : 'bg-white text-black'} md:rounded-[32px] md:h-[90vh] md:my-auto shadow-2xl overflow-hidden relative flex flex-col md:ring-[4px] md:ring-black/10 transition-colors duration-300`}>
 
         <div className={`h-11 ${isDarkMode ? 'bg-[#121212]' : 'bg-white'} shrink-0 flex items-end justify-between px-8 pb-1 z-50 select-none transition-colors duration-300`}>
           <span className="text-[15px] font-bold tracking-tight">9:41</span>

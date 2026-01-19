@@ -56,78 +56,96 @@ const ReaderView: React.FC<ReaderViewProps> = ({ url, isDarkMode, fontSizeMultip
         fetchArticle();
     }, [url]);
 
-    const handleContentClick = (e: React.MouseEvent) => {
+    const handleContentClick = (e: React.MouseEvent | React.TouchEvent) => {
         if (translation) {
             setTranslation(null);
             return;
         }
 
-        const selection = window.getSelection();
-        const text = selection?.toString().trim();
-
-        // Simple word extraction: if click on a word (or select it)
-        if (text && /^[a-zA-Z-]+$/.test(text) && text.length < 30) {
-            setTranslation({
-                word: text,
-                result: `翻译中...`,
-                x: e.clientX,
-                y: e.clientY
-            });
-
-            // 使用简单的翻译API - 这里使用一个免费的翻译服务
-            // 注意：在实际应用中，您可能需要使用自己的翻译API密钥
-            fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|zh`)
-                .then(res => res.json())
-                .then((data: TranslationResponse) => {
-                    const translatedText = data.responseData?.translatedText || "翻译未找到";
-                    // 只取简洁的翻译结果，去除多余信息
-                    const cleanTranslation = translatedText.split(/[.,;!?]/)[0].trim();
-                    setTranslation(prev => prev ? { ...prev, result: cleanTranslation } : null);
-                })
-                .catch(() => {
-                    // 如果API失败，使用简单的本地映射或显示错误
-                    const simpleTranslations: Record<string, string> = {
-                        'the': '这',
-                        'and': '和',
-                        'is': '是',
-                        'in': '在',
-                        'to': '到',
-                        'of': '的',
-                        'a': '一个',
-                        'for': '为了',
-                        'on': '在...上',
-                        'with': '和',
-                        'by': '通过',
-                        'at': '在',
-                        'from': '从',
-                        'as': '作为',
-                        'but': '但是',
-                        'or': '或者',
-                        'not': '不',
-                        'be': '是',
-                        'are': '是',
-                        'was': '是',
-                        'were': '是',
-                        'have': '有',
-                        'has': '有',
-                        'had': '有',
-                        'do': '做',
-                        'does': '做',
-                        'did': '做',
-                        'will': '将',
-                        'would': '将',
-                        'can': '能',
-                        'could': '能',
-                        'should': '应该',
-                        'may': '可能',
-                        'might': '可能',
-                        'must': '必须'
-                    };
-
-                    const simpleTranslation = simpleTranslations[text.toLowerCase()] || "点击其他位置关闭";
-                    setTranslation(prev => prev ? { ...prev, result: simpleTranslation } : null);
-                });
+        // 获取点击/触摸位置
+        let clientX: number, clientY: number;
+        if ('touches' in e && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else if ('changedTouches' in e && e.changedTouches.length > 0) {
+            clientX = e.changedTouches[0].clientX;
+            clientY = e.changedTouches[0].clientY;
+        } else if ('clientX' in e) {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        } else {
+            return;
         }
+
+        // 延迟一下让选择生效
+        setTimeout(() => {
+            const selection = window.getSelection();
+            const text = selection?.toString().trim();
+
+            // Simple word extraction: if click on a word (or select it)
+            if (text && /^[a-zA-Z-]+$/.test(text) && text.length < 30) {
+                setTranslation({
+                    word: text,
+                    result: `翻译中...`,
+                    x: clientX,
+                    y: clientY
+                });
+
+                // 使用简单的翻译API - 这里使用一个免费的翻译服务
+                // 注意：在实际应用中，您可能需要使用自己的翻译API密钥
+                fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|zh`)
+                    .then(res => res.json())
+                    .then((data: TranslationResponse) => {
+                        const translatedText = data.responseData?.translatedText || "翻译未找到";
+                        // 只取简洁的翻译结果，去除多余信息
+                        const cleanTranslation = translatedText.split(/[.,;!?]/)[0].trim();
+                        setTranslation(prev => prev ? { ...prev, result: cleanTranslation } : null);
+                    })
+                    .catch(() => {
+                        // 如果API失败，使用简单的本地映射或显示错误
+                        const simpleTranslations: Record<string, string> = {
+                            'the': '这',
+                            'and': '和',
+                            'is': '是',
+                            'in': '在',
+                            'to': '到',
+                            'of': '的',
+                            'a': '一个',
+                            'for': '为了',
+                            'on': '在...上',
+                            'with': '和',
+                            'by': '通过',
+                            'at': '在',
+                            'from': '从',
+                            'as': '作为',
+                            'but': '但是',
+                            'or': '或者',
+                            'not': '不',
+                            'be': '是',
+                            'are': '是',
+                            'was': '是',
+                            'were': '是',
+                            'have': '有',
+                            'has': '有',
+                            'had': '有',
+                            'do': '做',
+                            'does': '做',
+                            'did': '做',
+                            'will': '将',
+                            'would': '将',
+                            'can': '能',
+                            'could': '能',
+                            'should': '应该',
+                            'may': '可能',
+                            'might': '可能',
+                            'must': '必须'
+                        };
+
+                        const simpleTranslation = simpleTranslations[text.toLowerCase()] || "点击其他位置关闭";
+                        setTranslation(prev => prev ? { ...prev, result: simpleTranslation } : null);
+                    });
+            }
+        }, 50); // 50ms 延迟让选择完成
     };
 
     const baseFontSize = 18; // Default base size for reader
@@ -184,6 +202,7 @@ const ReaderView: React.FC<ReaderViewProps> = ({ url, isDarkMode, fontSizeMultip
                             className="reader-content select-text"
                             style={{ fontSize: `${currentFontSize}px`, lineHeight: 1.6 }}
                             onClick={handleContentClick}
+                            onTouchEnd={handleContentClick}
                             dangerouslySetInnerHTML={{ __html: article?.content || '' }}
                         />
 
