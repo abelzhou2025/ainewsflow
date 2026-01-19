@@ -1,8 +1,4 @@
 name = "ai-news-flow"
 compatibility_date = "2024-11-12"
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "ai-news-flow-db"
-database_id = "local-db"
