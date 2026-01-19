@@ -72,10 +72,10 @@ const NewsTab: React.FC<NewsTabProps> = ({
   const loadInitialClusters = useCallback(async () => {
     setLoading(true);
     try {
-      // Fetch RSS news and Feature News.md in parallel
+      // Fetch RSS news and feature-news.md in parallel
       const [fetchedClusters, featureNewsMd] = await Promise.all([
         fetchAndCategorizeNews(),
-        fetch('/Feature%20News.md').then(res => res.ok ? res.text() : '').catch(() => '')
+        fetch('/feature-news.md').then(res => res.ok ? res.text() : '').catch(() => '')
       ]);
       setClusters(fetchedClusters);
 
@@ -322,8 +322,8 @@ const NewsTab: React.FC<NewsTabProps> = ({
                     onClick={handleRefresh}
                     disabled={isRefreshing}
                     className={`p-1.5 rounded-full transition-all ${isDarkMode
-                        ? 'hover:bg-white/10 active:bg-white/20'
-                        : 'hover:bg-black/5 active:bg-black/10'
+                      ? 'hover:bg-white/10 active:bg-white/20'
+                      : 'hover:bg-black/5 active:bg-black/10'
                       } ${isRefreshing ? 'animate-spin' : ''}`}
                     title="Refresh feeds"
                   >

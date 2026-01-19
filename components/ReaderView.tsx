@@ -147,7 +147,7 @@ const ReaderView: React.FC<ReaderViewProps> = ({ url, isDarkMode, fontSizeMultip
                     {article?.siteName || 'Reader Mode'}
                 </span>
                 <button
-                    onClick={() => window.location.href = url}
+                    onClick={() => window.open(url, '_blank')}
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${isDarkMode ? 'bg-white/10 text-white' : 'bg-gray-100 text-gray-700'}`}
                 >
                     Original

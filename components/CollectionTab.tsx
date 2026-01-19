@@ -169,7 +169,7 @@ const CollectionTab: React.FC<CollectionTabProps> = ({ isDarkMode, toggleBookmar
   const importFromMarkdown = async () => {
     try {
       // 读取Markdown文件
-      const response = await fetch('/My%20Collection%20of%20Ai%20News.md');
+      const response = await fetch('/collection.md');
       if (!response.ok) {
         throw new Error('Failed to load markdown file');
       }
