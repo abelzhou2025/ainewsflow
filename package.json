@@ -5,15 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:full": "npm run build && npx wrangler pages dev dist --port 8788 --compatibility-date 2024-11-12 --compatibility-flag nodejs_compat",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "npx wrangler pages dev dist --port 8788"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
-    "react-dom": "^19.2.0",
-    "react": "^19.2.0"
+    "@mozilla/readability": "^0.5.0",
+    "linkedom": "^0.18.12",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260118.0",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
