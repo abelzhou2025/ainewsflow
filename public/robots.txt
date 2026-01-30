@@ -1,0 +1,16 @@
+# robots.txt for NewsFlow v2
+# NewsFlow is an RSS aggregator for personal learning
+
+User-agent: *
+Allow: /
+
+# Do not index dynamic pages
+Disallow: /api/
+Disallow: /?url=
+
+# Do not cache extracted content
+Disallow: /api/extract
+Disallow: /api/proxy-read
+
+# Sitemap (optional)
+# Sitemap: https://your-domain.com/sitemap.xml

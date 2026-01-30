@@ -1,0 +1,20 @@
+name = "newsflow-v2"
+compatibility_date = "2024-11-12"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+# D1 Database Bindings
+[[d1_databases]]
+binding = "DB"
+database_name = "newsflow"
+# database_id = "your-database-id" # 创建 D1 数据库后获取
+
+# KV Namespace for caching (optional)
+[[kv_namespaces]]
+binding = "CACHE"
+# id = "your-kv-id"
+
+# Build configuration for Pages Functions
+[build]
+command = "npm run build"
+cwd = "."
