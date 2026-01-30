@@ -14,11 +14,7 @@ import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
 import createDOMPurify from 'dompurify';
 
-type Env = {
-  DB: D1Database;
-};
-
-const app = new Hono<{ Bindings: Env }>();
+const app = new Hono();
 
 // CORS middleware
 app.use('/*', cors());
